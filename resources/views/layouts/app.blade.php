@@ -11,30 +11,32 @@
 <body>
 
     {{-- NAVBAR --}}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ route('home') }}">
-                <i class="fas fa-book-open me-2"></i>Universul Cărților
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Acasă</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Cărți</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Evenimente</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Coș <span class="badge bg-danger">0</span></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-                </ul>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ route('home') }}">
+            <i class="fas fa-book-open me-2"></i>Universul Cărților
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Acasă</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('books') }}">Cărți</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Evenimente</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Coș <span class="badge bg-danger">0</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
     {{-- CONTINUT --}}
     <main>
