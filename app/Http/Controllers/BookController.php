@@ -30,8 +30,13 @@ class BookController extends Controller
         return view('books.index', compact('books', 'categories'));
     }
 
-    public function show(Book $book)
+public function show(Book $book)
 {
-    return view('books.show', compact('book'));
+    $similar = Book::where('category', $book->category)
+                ->where('id', '!=', $book->id)
+                ->limit(4)
+                ->get();
+
+    return view('books.show', compact('book', 'similar'));
 }
 }

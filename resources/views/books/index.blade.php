@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', 'Cărți - Universul Cărților')
 
@@ -45,9 +45,15 @@
                     <span class="badge bg-secondary mt-1 mb-2" style="width:fit-content">{{ $book->category }}</span>
                     <div class="mt-auto d-flex justify-content-between align-items-center">
                         <span class="fw-bold text-danger fs-6">{{ number_format($book->price, 2) }} lei</span>
-                        <button class="btn btn-sm btn-dark">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
+                        @auth
+                            <button class="btn btn-sm btn-dark">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        @else
+                            <a href="{{ route('login') }}" class="btn btn-sm btn-dark">
+                                <i class="fas fa-cart-plus"></i>
+                            </a>
+                        @endauth
                     </div>
                 </div>
             </a>

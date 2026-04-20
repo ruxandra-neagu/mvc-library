@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', $book->title . ' - Universul Cărților')
 
@@ -62,9 +62,15 @@
             {{-- PRET + BUTON --}}
             <div class="d-flex align-items-center gap-4 mt-4">
                 <span class="fs-2 fw-bold text-danger">{{ number_format($book->price, 2) }} lei</span>
-                <button class="btn btn-dark btn-lg" {{ $book->stock == 0 ? 'disabled' : '' }}>
-                    <i class="fas fa-cart-plus me-2"></i>Adaugă în coș
-                </button>
+                @auth
+                    <button class="btn btn-dark btn-lg" {{ $book->stock == 0 ? 'disabled' : '' }}>
+                        <i class="fas fa-cart-plus me-2"></i>Adaugă în coș
+                    </button>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-dark btn-lg">
+                        <i class="fas fa-cart-plus me-2"></i>Adaugă în coș
+                    </a>
+                @endauth
             </div>
 
             {{-- BENEFICII --}}
@@ -86,13 +92,6 @@
     </div>
     @endif
 
-    {{-- CARTI SIMILARE --}}
-    @php
-        $similar = \App\Models\Book::where('category', $book->category)
-                    ->where('id', '!=', $book->id)
-                    ->limit(4)
-                    ->get();
-    @endphp
 
     @if($similar->count() > 0)
     <div class="mt-5">
