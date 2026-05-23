@@ -52,3 +52,13 @@ auth.json
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=neagu.ruxandra2003@gmail.com
+MAIL_PASSWORD="ytwfftnunxamsqjz"
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=neagu.ruxandra2003@gmail.com
+MAIL_FROM_NAME="Universul Cărților"

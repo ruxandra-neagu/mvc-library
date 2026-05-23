@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container py-5">
-    <h2 class="fw-bold mb-4">❓ Întrebări Frecvente</h2>
+    <h2 class="fw-bold mb-4">Întrebări Frecvente</h2>
 
     <div class="accordion" id="faqAccordion">
 

@@ -63,9 +63,12 @@
             <div class="d-flex align-items-center gap-4 mt-4">
                 <span class="fs-2 fw-bold text-danger">{{ number_format($book->price, 2) }} lei</span>
                 @auth
-                    <button class="btn btn-dark btn-lg" {{ $book->stock == 0 ? 'disabled' : '' }}>
-                        <i class="fas fa-cart-plus me-2"></i>Adaugă în coș
-                    </button>
+                    <form method="POST" action="{{ route('cart.add', $book) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-dark btn-lg" {{ $book->stock == 0 ? 'disabled' : '' }}>
+                            <i class="fas fa-cart-plus me-2"></i>Adaugă în coș
+                        </button>
+                    </form>
                 @else
                     <a href="{{ route('login') }}" class="btn btn-dark btn-lg">
                         <i class="fas fa-cart-plus me-2"></i>Adaugă în coș

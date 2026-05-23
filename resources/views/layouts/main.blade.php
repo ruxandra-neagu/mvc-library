@@ -13,7 +13,7 @@
     <!-- CSS propriu -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     {{-- NAVBAR --}}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -44,9 +44,15 @@
                     {{-- COS --}}
                     <li class="nav-item">
                         @auth
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('cart.index') }}">
                                 <i class="fas fa-shopping-cart"></i> Coș
-                            </a>
+                                @auth
+                                    @php $cartCount = \App\Models\CartItem::where('user_id', Auth::id())->sum('quantity'); @endphp
+                                    @if($cartCount > 0)
+                                        <span class="badge bg-warning text-dark">{{ $cartCount }}</span>
+                                    @endif
+                                @endauth
+                            </a>>
                         @else
                             <a class="nav-link" href="{{ route('login') }}">
                                 <i class="fas fa-shopping-cart"></i> Coș
@@ -90,14 +96,16 @@
     </nav>
 
     {{-- CONTINUT --}}
+<main class="flex-grow-1">
     @yield('content')
+</main>
 
     {{-- FOOTER --}}
     <footer class="bg-dark text-white py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="mb-1">&copy; 2024 Universul Cărților</p>
+                    <p class="mb-1">&copy; 2026 Universul Cărților</p>
                     <p class="mb-1 small text-muted">Program: Luni-Vineri: 9:00-18:00, Sâmbătă: 10:00-14:00</p>
                     <p class="mb-0 small text-muted">universulcartilor.contact@gmail.com | 0123-456-789</p>
                 </div>

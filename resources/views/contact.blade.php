@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
 
-            <h2 class="fw-bold mb-4">📬 Contactează-ne</h2>
+            <h2 class="fw-bold mb-4">Contactează-ne</h2>
 
             {{-- INFORMATII CONTACT --}}
             <div class="row g-4 mb-5">

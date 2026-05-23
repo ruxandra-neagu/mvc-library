@@ -6,8 +6,6 @@
 
 <div class="container py-5">
 
-    <h2 class="mb-4 fw-bold">📚 Toate cărțile</h2>
-
     {{-- SEARCH + FILTRE --}}
     <form method="GET" action="{{ route('books') }}" class="row g-2 mb-4">
         <div class="col-md-6">
@@ -45,13 +43,16 @@
                     <span class="badge bg-secondary mt-1 mb-2" style="width:fit-content">{{ $book->category }}</span>
                     <div class="mt-auto d-flex justify-content-between align-items-center">
                         <span class="fw-bold text-danger fs-6">{{ number_format($book->price, 2) }} lei</span>
-                        @auth
-                            <button class="btn btn-sm btn-dark">
-                                <i class="fas fa-cart-plus"></i>
-                            </button>
+                       @auth
+                            <form method="POST" action="{{ route('cart.add', $book) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-dark">
+                                    <i class="fas fa-cart-plus"></i> Adaugă în coș
+                                </button>
+                            </form>
                         @else
                             <a href="{{ route('login') }}" class="btn btn-sm btn-dark">
-                                <i class="fas fa-cart-plus"></i>
+                                <i class="fas fa-cart-plus"></i> Adaugă în coș
                             </a>
                         @endauth
                     </div>
@@ -71,7 +72,7 @@
 {{-- PAGINARE --}}
 <div class="mt-4 d-flex flex-column align-items-center gap-2">
     <small class="text-muted">
-        Showing {{ $books->firstItem() }} to {{ $books->lastItem() }} of {{ $books->total() }} results
+        {{ $books->firstItem() }} - {{ $books->lastItem() }} din {{ $books->total() }} rezultate
     </small>
     <nav>
         {{ $books->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') }}
