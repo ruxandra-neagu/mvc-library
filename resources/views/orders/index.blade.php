@@ -72,64 +72,29 @@
                     </div>
                 </div>
 
-                {{-- Produsele din comanda --}}
+                {{-- Buton anulare --}}
                 <hr class="my-3">
 
-                    @php $minutesLeft = 15 - $order->created_at->diffInMinutes(now()); @endphp
+              @php $minutesLeft = 15 - (int) $order->created_at->diffInSeconds(now()) / 60; $minutesLeft = (int) ceil($minutesLeft); @endphp
 
-                    @if($order->status === 'pending' && $minutesLeft > 0)
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <form method="POST" action="{{ route('orders.cancel', $order) }}"
-                                onsubmit="return confirm('Ești sigur că vrei să anulezi comanda?')">
-                                @csrf
-                                @method('DELETE')
-                               {{-- Modal Anulare --}}
-                        <div class="modal fade" id="cancelModal" tabindex="-1">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content border-0 shadow">
-                                    <div class="modal-body text-center p-5">
-                                        <i class="fas fa-exclamation-triangle fa-4x text-warning mb-4"></i>
-                                        <h4 class="fw-bold mb-2">Anulezi comanda?</h4>
-                                        <p class="text-muted mb-4">
-                                            Această acțiune nu poate fi anulată.<br>
-                                            Ești sigur că vrei să continui?
-                                        </p>
-                                        <div class="d-flex gap-3 justify-content-center">
-                                            <button type="button" class="btn btn-outline-secondary px-4"
-                                                    data-bs-dismiss="modal">
-                                                <i class="fas fa-arrow-left me-2"></i>Nu, înapoi
-                                            </button>
-                                            <form id="cancelForm" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger px-4">
-                                                    <i class="fas fa-times me-2"></i>Da, anulează
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <script>
-                            function confirmCancel(orderId) {
-                                document.getElementById('cancelForm').action = '/orders/' + orderId + '/cancel';
-                                new bootstrap.Modal(document.getElementById('cancelModal')).show();
-                            }
-                        </script>
-                            </form>
-                            <small class="text-muted">
-                                <i class="fas fa-clock me-1"></i>Poți anula în următoarele
-                                <strong>{{ $minutesLeft }}</strong> minute
-                            </small>
-                        </div>
-                    @elseif($order->status === 'pending')
-                        <small class="text-muted d-block mb-3">
-                            <i class="fas fa-lock me-1"></i>Termenul de anulare a expirat
+                @if($order->status === 'pending' && $minutesLeft > 0)
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                onclick="confirmCancel({{ $order->id }})">
+                            <i class="fas fa-times me-1"></i>Anulează comanda
+                        </button>
+                        <small class="text-muted">
+                            <i class="fas fa-clock me-1"></i>Poți anula în următoarele
+                            <strong>{{ $minutesLeft }}</strong> minute
                         </small>
-                    @endif
+                    </div>
+                @elseif($order->status === 'pending')
+                    <small class="text-muted d-block mb-3">
+                        <i class="fas fa-lock me-1"></i>Termenul de anulare a expirat
+                    </small>
+                @endif
 
+                {{-- Produsele din comanda --}}
                 <div class="row g-2">
                     @foreach($order->items as $item)
                     <div class="col-md-4">
@@ -150,5 +115,41 @@
         @endforeach
     @endif
 </div>
+
+{{-- Modal Anulare (o singura data, in afara loop-ului) --}}
+<div class="modal fade" id="cancelModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-body text-center p-5">
+                <i class="fas fa-exclamation-triangle fa-4x text-warning mb-4"></i>
+                <h4 class="fw-bold mb-2">Anulezi comanda?</h4>
+                <p class="text-muted mb-4">
+                    Această acțiune nu poate fi anulată.<br>
+                    Ești sigur că vrei să continui?
+                </p>
+                <div class="d-flex gap-3 justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary px-4"
+                            data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left me-2"></i>Nu, înapoi
+                    </button>
+                    <form id="cancelForm" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger px-4">
+                            <i class="fas fa-times me-2"></i>Da, anulează
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmCancel(orderId) {
+        document.getElementById('cancelForm').action = '/orders/' + orderId + '/cancel';
+        new bootstrap.Modal(document.getElementById('cancelModal')).show();
+    }
+</script>
 
 @endsection
